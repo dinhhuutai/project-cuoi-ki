@@ -3,6 +3,8 @@
 <%@include file="/common/taglib.jsp"%>
 <c:url var="LoadUrl" value="/load-product" />
 <c:url var="SearchUrl" value="/search-product" />
+<c:url var="images" value="/images" />
+<c:url var="productid" value="/product" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,13 +196,6 @@
 									${ item.price }
 								</span>
 							</div>
-
-							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="<c:url value='/template/user/images/icons/icon-heart-01.png' />" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="<c:url value='/template/user/images/icons/icon-heart-02.png' />" alt="ICON">
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -294,11 +289,12 @@
 					color,
 					name,
 				},
-				success: function(data){
-					var row = document.getElementById("container-product-shop");
+				success: function(datas){
+					
+					/* var row = document.getElementById("container-product-shop");
 					
 					
-					row.innerHTML = data;
+					row.innerHTML = datas;
 					
 					var htmls = document.querySelectorAll(".product");
 					row = document.getElementById("container-product-shop");
@@ -309,9 +305,41 @@
 
 						row.innerHTML += "<div class=\"product col-sm-6 col-md-4 col-lg-3 p-b-35\">" + html.innerHTML + "</div>";
 						
-						console.log(html);
+					}); */
+					
+					
+					var row = document.getElementById("container-product-shop");
+					var html = "";
+					
+					datas.forEach(data => {
+						html += 
+						"<div class=\"product col-sm-6 col-md-4 col-lg-3 p-b-35 category-" + data.categoryId + "\">" +
+							
+							"<div class=\"block2\">" +
+								"<div class=\"block2-pic hov-img0\" data-label=\"New\" style=\"min-height: 334px;\">" +
+									"<img style=\"image-rendering: pixelated;\" src=\"${images}/" + data.image + "\" alt=\"IMG-PRODUCT\">" +
+
+									"<a style=\"box-shadow: 1px 1px 1px #333;\" href=\"${productid}?id=" + data.id + "\"  class=\"block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04\">" +
+										"Quick View" +
+									"</a>" +
+								"</div>" +
+
+								"<div class=\"block2-txt flex-w flex-t p-t-14\">" +
+									"<div class=\"block2-txt-child1 flex-col-l \">" +
+										"<span class=\"stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6\">" +
+											data.name +
+										"</span>" +
+
+										"<span class=\"stext-105 cl3\">" +
+											data.price +
+										"</span>" +
+									"</div>" +
+								"</div>" +
+							"</div>" +
+						"</div>";
 					})
-					console.log(product);
+					
+					row.innerHTML = html;
 					
 				},
 				error: function(xhr){
@@ -344,8 +372,38 @@
 					color,
 					name,
 				},
-				success: function(res){
+				success: function(datas){
 					var row = document.getElementById("container-product-shop");
+					
+					var html = "";
+					
+					datas.forEach(data => {
+						html += 
+						"<div class=\"product col-sm-6 col-md-4 col-lg-3 p-b-35 category-" + data.categoryId + "\">" +
+							
+							"<div class=\"block2\">" +
+								"<div class=\"block2-pic hov-img0\" data-label=\"New\" style=\"min-height: 334px;\">" +
+									"<img style=\"image-rendering: pixelated;\" src=\"${images}/" + data.image + "\" alt=\"IMG-PRODUCT\">" +
+
+									"<a style=\"box-shadow: 1px 1px 1px #333;\" href=\"${productid}?id=" + data.id + "\"  class=\"block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04\">" +
+										"Quick View" +
+									"</a>" +
+								"</div>" +
+
+								"<div class=\"block2-txt flex-w flex-t p-t-14\">" +
+									"<div class=\"block2-txt-child1 flex-col-l \">" +
+										"<span class=\"stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6\">" +
+											data.name +
+										"</span>" +
+
+										"<span class=\"stext-105 cl3\">" +
+											data.price +
+										"</span>" +
+									"</div>" +
+								"</div>" +
+							"</div>" +
+						"</div>";
+					})
 					
 					row.innerHTML += res;
 					

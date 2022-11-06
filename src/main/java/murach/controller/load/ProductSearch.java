@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import murach.model.ProductModel;
 import murach.service.IProductService;
 
@@ -78,7 +80,12 @@ public class ProductSearch extends HttpServlet {
 					+ "				</div>";
 		}
 		
-		out.println(html);
+		/* out.println(html); */
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		resp.setContentType("application/json");
+		mapper.writeValue(resp.getOutputStream(), products);
 		
 		
 
