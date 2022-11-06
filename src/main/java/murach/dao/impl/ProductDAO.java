@@ -62,7 +62,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 
 	@Override
 	public List<ProductModel> findAll(int index, int itemInPage) {
-		String sql = "SELECT * FROM product where quantity > 0 ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM product where quantity > 0 ORDER BY id limit ?, ?";
 		
 		return query(sql, new ProductMapper(), index, itemInPage);
 	}
@@ -87,7 +87,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 
 	@Override
 	public List<ProductModel> findProductNew(int itemProductNew) {
-		String sql = "SELECT * FROM product where quantity > 0 ORDER BY createddate desc OFFSET 0 ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM product where quantity > 0 ORDER BY createddate desc limit 0, ?";
 		
 		return query(sql, new ProductMapper(), itemProductNew);
 	}
@@ -97,7 +97,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 		int icategory = Integer.parseInt(category);
 		int icolor = Integer.parseInt(color);
 		
-		StringBuilder sql = new StringBuilder("SELECT * FROM product where quantity > 0 and name ilike ? ");
+		StringBuilder sql = new StringBuilder("SELECT * FROM product where quantity > 0 and name like ? ");
 
 		if(icategory != 0) {
 			sql.append("and categoryid = ? ");
@@ -132,7 +132,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 		}
 		
 
-		sql.append("OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY");
+		sql.append("limit ?, 20");
 
 		if(icategory != 0 &&  icolor == 0) {
 			return query(sql.toString(), new ProductMapper(), name, icategory, amount);
@@ -153,7 +153,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 		int icategory = Integer.parseInt(category);
 		int icolor = Integer.parseInt(color);
 		
-		StringBuilder sql = new StringBuilder("SELECT * FROM product where quantity > 0 and name ilike ? ");
+		StringBuilder sql = new StringBuilder("SELECT * FROM product where quantity > 0 and name like ? ");
 		
 		if(icategory != 0) {
 			sql.append("and categoryid = ? ");
@@ -187,7 +187,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 			}
 		}
 		
-		sql.append("OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY");
+		sql.append("limit 0, 20");
 		
 		if(icategory != 0 &&  icolor == 0) {
 			return query(sql.toString(), new ProductMapper(), name, icategory);
@@ -213,14 +213,14 @@ public class ProductDAO extends AbstractDAO<ProductModel> implements IProductDAO
 
 	@Override
 	public List<ProductModel> findTop10ProductPopularity() {
-		String sql = "select * from product order by popularity desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
+		String sql = "select * from product order by popularity desc limit 0, 10";
 		
 		return query(sql, new ProductMapper());
 	}
 
 	@Override
 	public List<ProductModel> searchProduct(String name) {
-		String sql = "SELECT * FROM product WHERE name ILIKE ?";
+		String sql = "SELECT * FROM product WHERE name LIKE ?";
 		
 		return query(sql, new ProductMapper(), name);
 	}

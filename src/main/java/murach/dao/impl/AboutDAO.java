@@ -50,7 +50,7 @@ public class AboutDAO extends AbstractDAO<AboutModel> implements IAboutDAO {
 
 	@Override
 	public List<AboutModel> findAll(int index, int itemInPage) {
-		String sql = "SELECT * FROM about ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM about ORDER BY id limit ?, ?";
 		
 		return query(sql, new AboutMapper(), index, itemInPage);
 	}

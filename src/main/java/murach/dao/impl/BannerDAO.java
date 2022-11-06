@@ -50,14 +50,14 @@ public class BannerDAO extends AbstractDAO<BannerModel> implements IBannerDAO {
 
 	@Override
 	public List<BannerModel> find2Banner() {
-		String sql = "SELECT * FROM banner ORDER BY id OFFSET 0 ROWS FETCH NEXT 2 ROWS ONLY";
+		String sql = "SELECT * FROM banner ORDER BY id limit 0, 2";
 		
 		return query(sql, new BannerMapper());
 	}
 
 	@Override
 	public List<BannerModel> find3Banner() {
-		String sql = "SELECT * FROM banner ORDER BY id OFFSET 2";
+		String sql = "SELECT * FROM banner ORDER BY id limit 2, 3";
 		
 		return query(sql, new BannerMapper());
 	}
@@ -71,7 +71,7 @@ public class BannerDAO extends AbstractDAO<BannerModel> implements IBannerDAO {
 
 	@Override
 	public List<BannerModel> findAll(int index, int itemInPage) {
-		String sql = "SELECT * FROM banner ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM banner ORDER BY id limit ?, ?";
 		
 		return query(sql, new BannerMapper(), index, itemInPage);
 	}

@@ -95,7 +95,7 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
 	@Override
 	public List<UserModel> findAll(int index, int itemInPage) {
-		String sql = "SELECT * FROM users where status = 1 and roleid = 2 ORDER BY fullname OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM users where status = 1 and roleid = 2 ORDER BY fullname limit ?, ?";
 		
 		
 		return query(sql, new UserMapper(), index, itemInPage);
@@ -126,14 +126,14 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
 	@Override
 	public List<UserModel> findTop10CustomerPrice() {
-		String sql = "select * from users where roleid = 2 order by totalprice desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
+		String sql = "select * from users where roleid = 2 order by totalprice desc limit 0, 10";
 		
 		return query(sql, new UserMapper());
 	}
 
 	@Override
 	public List<UserModel> findTop10CustomerOrders() {
-		String sql = "select * from users where roleid = 2 order by totalorders desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
+		String sql = "select * from users where roleid = 2 order by totalorders desc limit 0, 10";
 		
 		return query(sql, new UserMapper());
 	}

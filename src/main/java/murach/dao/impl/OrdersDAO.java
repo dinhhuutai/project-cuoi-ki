@@ -92,7 +92,7 @@ public class OrdersDAO extends AbstractDAO<OrdersModel> implements IOrdersDAO {
 	@Override
 	public List<OrdersModel> findAllWait(int index, int itemInPage) {
 		
-		String sql = "select * from orders where status = 1 and confirm = 1 ORDER BY orderdate desc OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "select * from orders where status = 1 and confirm = 1 ORDER BY orderdate desc limit ?, ?";
 		
 		return query(sql, new OrdersMapper(), index, itemInPage);
 	}
@@ -100,7 +100,7 @@ public class OrdersDAO extends AbstractDAO<OrdersModel> implements IOrdersDAO {
 	@Override
 	public List<OrdersModel> findAllDelivery(int index, int itemInPage) {
 		
-		String sql = "select * from orders where status = 1 and confirm = 0 and delivered = 0 ORDER BY orderdate desc OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "select * from orders where status = 1 and confirm = 0 and delivered = 0 ORDER BY orderdate desc limit ?, ?";
 		
 		return query(sql, new OrdersMapper(), index, itemInPage);
 	}
@@ -108,7 +108,7 @@ public class OrdersDAO extends AbstractDAO<OrdersModel> implements IOrdersDAO {
 	@Override
 	public List<OrdersModel> findAllDelivered(int index, int itemInPage) {
 		
-		String sql = "select * from orders where status = 1 and delivered = 1 ORDER BY orderdate desc OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "select * from orders where status = 1 and delivered = 1 ORDER BY orderdate desc limit ?, ?";
 		
 		return query(sql, new OrdersMapper(), index, itemInPage);
 	}

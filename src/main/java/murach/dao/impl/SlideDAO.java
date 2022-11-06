@@ -50,7 +50,7 @@ public class SlideDAO extends AbstractDAO<SlideModel> implements ISlieDAO {
 
 	@Override
 	public List<SlideModel> findAll(int index, int itemInPage) {
-		String sql = "SELECT * FROM slide ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		String sql = "SELECT * FROM slide ORDER BY id limit ?, ?";
 		
 		return query(sql, new SlideMapper(), index, itemInPage);
 	}
